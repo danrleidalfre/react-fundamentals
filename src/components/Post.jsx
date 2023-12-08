@@ -1,11 +1,12 @@
 import styles from './Post.module.css'
+import {Comment} from "./Comment.jsx";
 
 export function Post() {
     return (
         <article className={styles.post}>
             <header>
                 <div className={styles.author}>
-                    <img className={styles.avatar} src="https://github.com/danrleidalfre.png" />
+                    <img className={styles.avatar} src="https://github.com/danrleidalfre.png" alt="" />
                     <div className={styles.authorInfo}>
                         <strong>Danrlei</strong>
                         <span>Web Developer</span>
@@ -17,7 +18,7 @@ export function Post() {
 
             <div className={styles.content}>
                 <p>
-                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.
+                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using , making it look like readable English.
                 </p>
                 <p>
                     It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
@@ -30,7 +31,7 @@ export function Post() {
             </div>
 
             <form className={styles.commentForm}>
-                <strong>Comment here:</strong>
+                <strong>Comment this post</strong>
 
                 <textarea />
 
@@ -38,6 +39,10 @@ export function Post() {
                     <button type="submit">Publish</button>
                 </footer>
             </form>
+
+            <div className={styles.commentList}>
+                <Comment />
+            </div>
         </article>
     )
 }
