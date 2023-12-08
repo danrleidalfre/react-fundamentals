@@ -6,7 +6,7 @@ import {ptBR} from "date-fns/locale";
 import {useState} from "react";
 
 export function Post({ author, content, publishedAt }) {
-    const [comments, setComments] = useState([])
+    const [comments, setComments] = useState(['Legal!'])
     const [newCommentText, setNewCommentText] = useState('')
 
     const publishedAtFormatted = format(publishedAt, "d 'de' LLLL 'às' HH:mm'h'", {
@@ -19,6 +19,7 @@ export function Post({ author, content, publishedAt }) {
     })
 
     function handleNewCommentChange() {
+        event.target.setCustomValidity('')
         setNewCommentText(event.target.value)
     }
 
@@ -27,6 +28,20 @@ export function Post({ author, content, publishedAt }) {
         setComments([...comments, newCommentText])
         setNewCommentText('')
     }
+
+    function deleteComment(commentToDelete) {
+        const commentsWithoutDeletedOne = comments.filter(comment => {
+            return comment !== commentToDelete
+        })
+
+        setComments(commentsWithoutDeletedOne)
+    }
+
+    function handleNewCommentInvalid() {
+        event.target.setCustomValidity('Comment is required')
+    }
+
+    const isNewCommentEmpty = newCommentText.length === 0
 
     return (
         <article className={styles.post}>
@@ -57,16 +72,28 @@ export function Post({ author, content, publishedAt }) {
             <form onSubmit={handleCreateNewComment} className={styles.commentForm}>
                 <strong>Comment this post</strong>
 
-                <textarea onChange={handleNewCommentChange} value={newCommentText} name="comment" />
+                <textarea
+                    onChange={handleNewCommentChange}
+                    onInvalid={handleNewCommentInvalid}
+                    value={newCommentText}
+                    name="comment"
+                    required
+                />
 
                 <footer>
-                    <button type="submit">Publish</button>
+                    <button type="submit" disabled={isNewCommentEmpty}>Publish</button>
                 </footer>
             </form>
 
             <div className={styles.commentList}>
                 {comments.map(comment => {
-                    return <Comment key={comment} content={comment} />
+                    return (
+                        <Comment
+                            key={comment}
+                            content={comment}
+                            onDeleteComment={deleteComment}
+                        />
+                    )
                 })}
             </div>
         </article>
