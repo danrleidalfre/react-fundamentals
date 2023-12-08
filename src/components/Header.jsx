@@ -1,6 +1,6 @@
 import styles from './Header.module.css'
 
-import logo from '../../public/vite.svg'
+import logo from '/vite.svg'
 
 export function Header() {
     return (

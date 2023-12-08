@@ -6,6 +6,22 @@ import './global.css'
 import {Sidebar} from "./components/Sidebar.jsx";
 import {Post} from "./components/Post.jsx";
 
+const posts = [
+    {
+        id: 1,
+        author: {
+            avatarUrl: 'https://github.com/danrleidalfre.png',
+            name: 'Danrlei',
+            role: 'Web Developer'
+        },
+        content: [
+            { type: 'paragraph', content: 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using , making it look like readable English.' },
+            { type: 'link', content: '#developer' }
+        ],
+        publishedAt: new Date('2023-12-01 10:00:00')
+    }
+]
+
 export function App() {
     return (
         <div>
@@ -13,7 +29,18 @@ export function App() {
 
             <div className={styles.wrapper}>
                 <Sidebar />
-                <Post />
+                <main>
+                    {posts.map(post => {
+                        return (
+                            <Post
+                                key={post.id}
+                                author={post.author}
+                                content={post.content}
+                                publishedAt={post.publishedAt}
+                            />
+                        )
+                    })}
+                </main>
             </div>
         </div>
     )
